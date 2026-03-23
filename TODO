@@ -1,0 +1,9 @@
+[ ] Hall sensor driver
+    [ ] init timer in INPUT CAPTIRE
+    [ ] calculating speed
+    [ ] addimh speed to package/buffer
+[ ] I2C driver/oled display
+    [ ] just init I2C
+    [ ] enable ONE pixel on display
+    [ ] write font alghorithm
+[ ] UART debugger
