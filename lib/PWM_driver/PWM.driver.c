@@ -1,10 +1,12 @@
 #include <PWM_driver.h>
 #include <stm32f1xx.h>
+#include <config.h>
+#include <PinInitializer.h>
 void INIT_LED(){
-    PinInit(GPIOA, 0, 0b1011); // initializing pin 
+    PinInit(LED_PIN, 0b1011); // initializing pin 
     //clocking for TIM1
     RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
-    TIM2->PSC = 79;
+    TIM2->PSC = PWM_TIM_PSC;
     TIM2->ARR = 99;
     //(0b110 is bitmask for PWM1 mode)
     TIM2->CCMR1 |= (0b110 << 4) | TIM_CCMR1_OC1PE;// <- it is just important

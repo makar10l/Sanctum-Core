@@ -7,7 +7,7 @@ typedef struct{
     int size;
 } UARTPackage
 ;
-int UARTInit(uint32_t clocking, uint32_t baudrate, uint8_t remapping);
+int UARTInit(uint8_t remapping);
 int UartSend(UARTPackage* msg);
 int UartRead(char* buff);
 

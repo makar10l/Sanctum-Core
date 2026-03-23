@@ -1,5 +1,5 @@
-#ifndef PIN.h
-#define PIN.h
+#ifndef PIN
+#define PIN
 #include <stm32f1xx.h>
 
 void PinInit(GPIO_TypeDef* GPIO, uint8_t pin, uint8_t bitmask);
