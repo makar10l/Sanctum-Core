@@ -3,6 +3,7 @@
 #include <uart.h>
 #include <RingBuffer.h>
 #include <config.h>
+#include <dma.h>
 RingBuffer UART_BUFFER;
 
 int UARTInit(uint8_t remapping){
@@ -51,6 +52,7 @@ int UartSend(UARTPackage* msg){
         */
         DMA1_Channel4->CMAR = (uint32_t)&UART_BUFFER.buffer[UART_BUFFER.READ & BUFFER_SIZE_MASK];
         DMA1_Channel4->CNDTR = (uint32_t)aviable;
+        TX_SIZE = aviable;
         DMA1_Channel4->CCR |= DMA_CCR_EN;
         return 1; // means that function starts dma
     }

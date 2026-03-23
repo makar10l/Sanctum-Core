@@ -3,5 +3,5 @@
 #include <RingBuffer.h>
 void DMAInit();
 void DMA1_Channel4_IRQHandler();
-
+extern int TX_SIZE;
 #endif

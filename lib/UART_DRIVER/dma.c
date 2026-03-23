@@ -2,14 +2,12 @@
 #include <uart.h>
 #include <stm32f1xx.h>
 int TX_SIZE;
-
-void DMAInit(RingBuffer* buffer){
+void DMAInit(){
     //clocking
     NVIC_EnableIRQ(DMA1_Channel4_IRQn);
     RCC->AHBENR |= RCC_AHBENR_DMA1EN;
     //setting for dma(output & input)
     DMA1_Channel4->CPAR = (uint32_t)&(USART1->DR);
-    DMA1_Channel4->CMAR = (uint32_t)&buffer->buffer[buffer->READ & BUFFER_SIZE_MASK];
     //CCR
     DMA1_Channel4->CCR = DMA_CCR_DIR | DMA_CCR_TCIE | DMA_CCR_TEIE | DMA_CCR_MINC;
 }
