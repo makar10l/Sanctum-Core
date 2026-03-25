@@ -1,4 +1,3 @@
-#include <PWM_driver.h>
 #include <uart.h>
 #include <dma.h>
 #include <i2c.h>
@@ -19,41 +18,11 @@ uint8_t cmds[] = {
     0xA6,        // Normal Display
     0xAF         // Display ON
 };
-//uint8_t cmds[] = {0x00, 0xAF};
-uint8_t white_data[1025];
-UARTPackage msg = {
-    .chars = cmds,
-    .size = 23,
-};
-UARTPackage data = {
-    .chars = white_data,
-    .size = 1025,
-};
-int main(){
-    NVIC_EnableIRQ(I2C1_EV_IRQn);
-    white_data[0] = 0x40;
-    // Залить первую половину белым
-for(int i = 1; i < 513; i++) {
-    white_data[i] = 0xFF;
-}
-// Вторую половину чёрным
-for(int i = 513; i < 1025; i++) {
-    white_data[i] = 0x00;
-}
-    __enable_irq();
-    INIT_LED();
-    //BufferInit();
-    I2C_init(100000); 
-    I2C_sent(0x3C, msg);
 
-   // I2C_sent(0x3C, msg);
-    //UARTInit(1);
-    //DMAInit();
-    SetLampBrightness(0);
+int main(){
+    __enable_irq();
+    I2C_init(100000); 
     while(1){
-        if(I2C_sent(0x3C, data) == -2){
-        for(volatile int i = 0; i < 10000; i++);
-        }
         __WFI();
     }
     return 0;

@@ -1,5 +1,10 @@
 #define CLOCKING 8 * 1000000
 #define BAUDRATE 9600
-#define LED_PIN GPIOA, 0
 #define PWM_TIM_PSC (CLOCKING / (1000 * (99 + 1))) - 1
 #define APB1_FREQ_MHZ 8
+
+#define BASE_I2C_OAR 0x00
+#define BASE_I2C_DEVICE_ADDR 0x00
+
+#define NULL ((void*)0)
+
