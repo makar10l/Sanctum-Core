@@ -3,5 +3,5 @@
 #include <stm32f1xx.h>
 #include <uart.h>
     uint8_t I2C_init(uint16_t clk_freq_hz); 
-    int8_t I2C_send(uint16_t address, UARTPackage data);
+    int8_t I2C_sent(uint8_t addr, UARTPackage data);
 #endif
