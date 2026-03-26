@@ -8,3 +8,4 @@
 
 #define NULL ((void*)0)
 
+#define I2C_CLK_FREQ_HZ 100000

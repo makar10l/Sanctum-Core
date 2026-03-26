@@ -1,7 +1,6 @@
 #include <i2c.h>
 #include <config.h>
 #include <PinInitializer.h>
-#include <uart.h>
 
 static volatile uint8_t g_address = BASE_I2C_DEVICE_ADDR;
 static volatile uint16_t g_dataidx = 0;
