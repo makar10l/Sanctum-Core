@@ -1,13 +1,16 @@
 #include <i2c.h>
 #include <config.h>
 #include <PinInitializer.h>
-
+#include <uart.h>
 static volatile uint8_t g_address = BASE_I2C_DEVICE_ADDR;
 static volatile uint16_t g_dataidx = 0;
 static volatile uint8_t* g_dataptr = NULL;
 static volatile uint16_t g_data_size = 0;
 static volatile uint8_t g_i2c_busy_flag = 0;
-
+UARTPackage msg = {
+    .chars = "GOOD\r\n",
+    .size = 7,
+};
 int8_t I2C_init(uint16_t clk_freq_hz){
     RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
     NVIC_EnableIRQ(I2C1_EV_IRQn);
@@ -19,8 +22,8 @@ int8_t I2C_init(uint16_t clk_freq_hz){
 
     I2C1->CR2 = APB1_FREQ_MHZ;
     I2C1->CR2 |= I2C_CR2_ITEVTEN | I2C_CR2_ITBUFEN | I2C_CR2_ITERREN;
-    I2C1->CCR = (APB1_FREQ_MHZ * 1000000) / (2 * clk_freq_hz);
-    I2C1->TRISE = (APB1_FREQ_MHZ * 1000 / 1000) + 1;
+    I2C1->CCR = (APB1_FREQ_MHZ * 1000000) / (2 * clk_freq_hz) | I2C_CCR_FS;
+    I2C1->TRISE = (300 * APB1_FREQ_MHZ) / 1000 + 1;
     I2C1->OAR1 = BASE_I2C_OAR; 
     I2C1->CR1 |= I2C_CR1_PE;
     return 0;
