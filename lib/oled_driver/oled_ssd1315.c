@@ -20,9 +20,6 @@ int8_t ssd1315_display_init(ssd1315_display_t* disp, uint8_t addr){
     if(!(I2C1->CR1 & I2C_CR1_PE)){
         I2C_init(I2C_CLK_FREQ_HZ);
     }
-    for(int i = 0; i < 1024; i++){
-        disp->data_buffer[i] = 0;
-   }
     I2C_sent(&(disp->I2C_device));
     return 0;
 }

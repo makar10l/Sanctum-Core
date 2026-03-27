@@ -1,25 +1,21 @@
 #include <dma.h>
 #include <i2c.h>
 #include <oled_ssd1315.h>
-
+#include <fonts.h>
+#include <tengine.h>
 int main(){
     __enable_irq();
-    
     ssd1315_display_t display;
-    
-    // Белый экран
-   for(int i = 0; i < 1024; i++){
+    tengine_t text;
+    tengine_init(&text, font_8x8);
+    for(int i = 0; i < 1024; i++){
         display.data_buffer[i] = 0;
-   }
-   ssd1315_display_init(&display, 0x3C);
-    ssd1315_display_update(&display);
+    }
+    char* str = "SANCTUM";
+    tengine_print(&text, display.data_buffer, str, 7);
+    ssd1315_display_init(&display, 0x3C);
     while(1){
-        ssd1315_display_update(&display);  
-        for(int i = 0; i < 1024; i++) display.data_buffer[i] = 0;
-        for(volatile int i = 0; i < 1000000; i++);
-        ssd1315_display_update(&display); 
-         for(int i = 0; i < 1024; i++) display.data_buffer[i] = 0xFF;
-        for(volatile int i = 0; i < 1000000; i++);
+        ssd1315_display_update(&display);
     };
     
     return 0;
