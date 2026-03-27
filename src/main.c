@@ -11,9 +11,11 @@ int main(){
     for(int i = 0; i < 1024; i++){
         display.data_buffer[i] = 0;
     }
-    char* str = "SANCTUM";
-    tengine_print(&text, display.data_buffer, str, 7);
     ssd1315_display_init(&display, 0x3C);
+    ssd1315_display_update(&display);
+    for(volatile int i = 0; i < 10000; i++){ __NOP();}
+    char* str = "SANCTUM FUCKS YOU BITCH";
+    tengine_print(&text, display.data_buffer, str, 23);
     while(1){
         ssd1315_display_update(&display);
     };
