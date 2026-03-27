@@ -1,7 +1,6 @@
 #ifndef TEXT_ENGINE
 #define TEXT_ENGINE
 #include <stdint.h>
-#include <fonts.h>
 typedef struct{
     uint16_t x;
     uint8_t y;
