@@ -1,17 +1,8 @@
-# UOBC
-universal on-board computer for every vehicle with wheels(UOBC)
+# Sanctum Oculus
+Sanctum Oculus is a simplest tool for FPV pilots. It was written no HAL, no external libs.
 
+# What is it?
+Sanctum Oculus is a FPV drone field debugger.
 
-# main features
-1. WebUI on esp8266
-2. Hall sensor for calculating speed
-3. PWM Led controller on MOSFET
-4. OLED display
-
-
-# main controller
-Brain of UOBC is stm32f103c8(blue pill), for web esp8266 is used. Their connection is is carried out by UART
-
-# drivers
-all drivers is self-writed, there is no libraryes(only CMSIS headers)
-
+# Main Feauters
+Sanctum Oculus is a "bridge" between FPV drone and display. It works on UART.
