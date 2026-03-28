@@ -7,6 +7,6 @@ Sanctum Oculus is a FPV drone field debugger.
 # Main Feauters
 Sanctum Oculus is a "bridge" between FPV drone and display. It works on UART.
 
-#Work Scheme
+# Work Scheme
 
 FPV DRONE MOTHERBOARD UART PINS & GND -> pins on Sanctum Oculus -> dipslay.
