@@ -16,7 +16,6 @@ int main(){
     ssd1315_display_update(&display);
 
     while(1){
-        //solve короче блять нужно добаивть флаг который прерывание поднимает тогда вызывается принт и после принта флаг опускается это решит проблему с тем что на дисплей бесконечно пишется хуета всякая
         if(data_is_readable)
         {
             tengine_print(&text, &display.data_buffer, read_data_buffer, RX_size);
