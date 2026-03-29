@@ -20,9 +20,9 @@ int main(){
         {
             tengine_print(&text, &display.data_buffer, read_data_buffer, RX_size);
             data_is_readable = 0;
+            for(volatile int i = 0; i < 10000; i++){__NOP();}
+            ssd1315_display_update(&display);
         }
-        for(volatile int i = 0; i < 10000; i++){__NOP();}
-        ssd1315_display_update(&display);
     };
     
     return 0;
