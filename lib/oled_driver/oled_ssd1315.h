@@ -2,11 +2,11 @@
 #define SSD1315
 #include <stdint.h>
 #include <i2c.h>
-#define DATA_BUFFER_SIZE 1024
+#define DISPLAY_BUFFER_SIZE 1024
 typedef struct{
     i2c_device_t I2C_device;
     uint8_t contrast;
-    uint8_t data_buffer[DATA_BUFFER_SIZE];
+    uint8_t data_buffer[DISPLAY_BUFFER_SIZE];
 } ssd1315_display_t;
 
 int8_t ssd1315_display_on(ssd1315_display_t* disp);

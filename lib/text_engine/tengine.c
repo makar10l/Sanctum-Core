@@ -1,5 +1,6 @@
 #include <tengine.h>
 #include <config.h>
+volatile uint8_t clear_buffer = 0;
 const uint8_t font_8x8[][8] = {
     // 0x20 - SPACE
     {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
@@ -131,6 +132,15 @@ const uint8_t font_8x8[][8] = {
     {0x80, 0x80, 0x80, 0x80, 0x80, 0x00, 0x00, 0x00}
 };
 int8_t tengine_putchar(tengine_t* tengine, char ch,uint8_t* buffer){ 
+    if(clear_buffer){
+        for(uint16_t i = 0; i < DISPLAY_BUFFER_SIZE; i++){
+            buffer[i] = 0;
+        }
+        tengine->cursor.x = 0;
+        tengine->cursor.y = 0;
+        clear_buffer = 0;
+        return 1;
+    }
     const uint8_t* symbol = tengine->font[ch - 0x20];
     uint16_t x = tengine->cursor.x;
     uint8_t y = tengine->cursor.y;
@@ -140,27 +150,30 @@ int8_t tengine_putchar(tengine_t* tengine, char ch,uint8_t* buffer){
     for(int i = 0; i < 8; i++){
         buffer[index + i] = symbol[i];
     }
+    tengine->cursor.x += 8;
+    if(tengine->cursor.x >= 128){
+        tengine->cursor.y += 8;
+        if(tengine->cursor.y >= 64){
+            clear_buffer = 1;
+        }
+        tengine->cursor.x = 0;
+    }
     return 0;
 }
 
 int8_t tengine_init(tengine_t* tengine, const uint8_t* font){
     if(tengine == NULL || font == NULL) return -1;
-    tengine->font = (const uint8_t*)font;
+    tengine->font = &font[0];
     tengine->cursor.x = 0;
     tengine->cursor.y = 0;
     return 0;
 }
 
 int8_t tengine_print(tengine_t* tengine, uint8_t* buffer, char* str, uint16_t size){
-    for(uint16_t ch = 0; ch < size; ch++){
+    for(int16_t ch = 0; ch < size; ch++){
         int8_t res = tengine_putchar(tengine, str[ch], buffer);
-        if(res < 0){ return -1;}
-        tengine->cursor.x += 8;
-        if(tengine->cursor.x >= 128){
-            tengine->cursor.y += 8; 
-            tengine->cursor.x = 0;
-            continue;
-        }
+        if(res == -1){ return -1;}
+        if(res == 1) {ch = -1;}        
     }
     return 0;
 }

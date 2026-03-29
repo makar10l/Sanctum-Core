@@ -9,3 +9,5 @@
 #define NULL ((void*)0)
 
 #define I2C_CLK_FREQ_HZ (int)100000 
+
+#define DISPLAY_BUFFER_SIZE 1024

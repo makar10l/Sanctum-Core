@@ -1,7 +1,7 @@
 #include <oled_ssd1315.h>
 #include <config.h>
 #include <i2c.h>
-uint8_t data_to_sent[1025];
+uint8_t data_to_sent[DISPLAY_BUFFER_SIZE + 1];
 i2c_device_t virtual_display;
 //contrast command 0x00 0x81 0xCF
 const uint8_t ssd1315_init_buffer[] = {
@@ -39,9 +39,9 @@ int8_t ssd1315_display_setpix(ssd1315_display_t* disp, uint8_t x, uint8_t y, uin
 int8_t ssd1315_display_update(ssd1315_display_t* disp){
     data_to_sent[0] = 0x40;
     virtual_display = disp->I2C_device;
-    virtual_display.data_size = 1025;
+    virtual_display.data_size = DISPLAY_BUFFER_SIZE + 1;
     virtual_display.dataptr = data_to_sent;
-    for(int i = 0; i < 1024; i++){
+    for(int i = 0; i < DISPLAY_BUFFER_SIZE; i++){
             data_to_sent[i + 1] = disp->data_buffer[i];
     }
 
