@@ -5,9 +5,14 @@
 #include <config.h>
 #include <dma.h>
 RingBuffer UART_BUFFER;
-
+char read_data_buffer[256];
+volatile uint8_t read_data_cntr = 0;
+volatile uint8_t RX_size = 0;
+volatile uint8_t data_is_readable = 0;
 int UARTInit(uint8_t remapping){
     //Enabling Peripheral Clocking
+    NVIC_EnableIRQ(USART1_IRQn);
+    NVIC_SetPriority(USART1_IRQn, 0);
     RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
     RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
 
@@ -59,4 +64,17 @@ int UartSend(UARTPackage* msg){
     return 0;
 }
 
-int UartRead(char* buffer){return 0;}
+void USART1_IRQHandler(){
+    if(USART1->SR & USART_SR_RXNE){
+        RX_size = read_data_cntr;
+        uint16_t ch = USART1->DR;
+        if(ch == '\n'){
+            read_data_cntr = 0;
+            data_is_readable = 1;
+            return;
+        }
+        read_data_buffer[read_data_cntr] = ch;
+        RX_size++;
+        read_data_cntr++;
+    }
+}

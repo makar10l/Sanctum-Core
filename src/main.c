@@ -1,22 +1,28 @@
 #include <dma.h>
 #include <i2c.h>
 #include <oled_ssd1315.h>
-#include <fonts.h>
+#include <uart.h>
 #include <tengine.h>
 int main(){
     __enable_irq();
+    UARTInit(0);
     ssd1315_display_t display;
     tengine_t text;
-    tengine_init(&text, font_8x8);
+    tengine_init(&text, (const uint8_t*)font_8x8);
     for(int i = 0; i < 1024; i++){
         display.data_buffer[i] = 0;
     }
     ssd1315_display_init(&display, 0x3C);
     ssd1315_display_update(&display);
-    for(volatile int i = 0; i < 10000; i++){ __NOP();}
-    char* str = "SANCTUM FUCKS YOU BITCH";
-    tengine_print(&text, display.data_buffer, str, 23);
+
     while(1){
+        //solve короче блять нужно добаивть флаг который прерывание поднимает тогда вызывается принт и после принта флаг опускается это решит проблему с тем что на дисплей бесконечно пишется хуета всякая
+        if(data_is_readable)
+        {
+            tengine_print(&text, &display.data_buffer, read_data_buffer, RX_size);
+            data_is_readable = 0;
+        }
+        for(volatile int i = 0; i < 10000; i++){__NOP();}
         ssd1315_display_update(&display);
     };
     

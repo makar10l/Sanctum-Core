@@ -7,10 +7,6 @@ static volatile uint16_t g_dataidx = 0;
 static volatile uint8_t* g_dataptr = NULL;
 static volatile uint16_t g_data_size = 0;
 static volatile uint8_t g_i2c_busy_flag = 0;
-UARTPackage msg = {
-    .chars = "GOOD\r\n",
-    .size = 7,
-};
 int8_t I2C_init(uint16_t clk_freq_hz){
     RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
     NVIC_EnableIRQ(I2C1_EV_IRQn);
