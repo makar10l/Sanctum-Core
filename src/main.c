@@ -8,7 +8,7 @@ int main(){
     UARTInit(0);
     ssd1315_display_t display;
     tengine_t text;
-    tengine_init(&text, (const uint8_t*)font_8x8);
+    tengine_init(&text, font_8x8);
     for(int i = 0; i < 1024; i++){
         display.data_buffer[i] = 0;
     }

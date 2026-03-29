@@ -161,9 +161,9 @@ int8_t tengine_putchar(tengine_t* tengine, char ch,uint8_t* buffer){
     return 0;
 }
 
-int8_t tengine_init(tengine_t* tengine, const uint8_t* font){
+int8_t tengine_init(tengine_t* tengine, uint8_t (*font)[8]){
     if(tengine == NULL || font == NULL) return -1;
-    tengine->font = &font[0];
+    tengine->font = font;
     tengine->cursor.x = 0;
     tengine->cursor.y = 0;
     return 0;
